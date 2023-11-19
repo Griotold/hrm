@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Hello Page</title>
-    <meta charset="UTF-8">
-</head>
+<head th:replace="fragments/header :: header" />
+
 <body>
-    <h1>안녕하세요, <span th:text="${username}"></span>님!</h1>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div class="bg-dark text-white p-5">
+        <h1>안녕하세요, <span th:text="${username}"></span>님!</h1>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+</div>
+
 </body>
 </html>
