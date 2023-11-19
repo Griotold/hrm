@@ -6,6 +6,7 @@ import com.example.hrm.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleRepository articleRepository;
+
     @GetMapping("/new")
     public String newArticleForm() {
         return "articles/new";
@@ -39,6 +41,7 @@ public class ArticleController {
 
         return "redirect:/articles";
     }
+
     @GetMapping("/{id}")
     public String show(@PathVariable Long id, Model model) {
         log.info("id = {}", id);
@@ -56,5 +59,29 @@ public class ArticleController {
         List<Article> all = articleRepository.findAll();
         model.addAttribute("list", all);
         return "articles/list";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable Long id, Model model) {
+        Article article = articleRepository.findById(id).orElse(null);
+        model.addAttribute("article", article);
+        return "articles/edit";
+    }
+    @Transactional
+    @PostMapping("/update")
+    public String update(ArticleForm form) {
+        log.info("form = {}", form);
+
+        Article articleEntity = form.toEntity();
+        log.info("entity = {}", articleEntity.toString());
+
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        log.info("target = {}", target);
+
+        if(target != null) {
+            target.setTitle(form.getTitle());
+            target.setContent(form.getContent());
+        }
+        return "redirect:/articles/" + articleEntity.getId();
     }
 }
