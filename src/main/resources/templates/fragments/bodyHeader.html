@@ -43,4 +43,11 @@
             </div>
         </div>
     </nav>
+
+    <!-- 수정 또는 삭제 메시지 alert -->
+    <div class="alert alert-primary alert-dismissible" th:if="${param.msg}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+        <p th:text="${param.msg}"></p>
+    </div>
+
 </div>
