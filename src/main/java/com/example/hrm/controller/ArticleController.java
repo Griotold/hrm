@@ -2,7 +2,9 @@ package com.example.hrm.controller;
 
 import com.example.hrm.domain.Article;
 import com.example.hrm.dto.ArticleForm;
+import com.example.hrm.dto.CommentDto;
 import com.example.hrm.repository.ArticleRepository;
+import com.example.hrm.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleRepository articleRepository;
+    private final CommentService commentService;
 
     @GetMapping("/new")
     public String newArticleForm() {
@@ -49,8 +52,10 @@ public class ArticleController {
 
         Article article = articleRepository.findById(id)
                 .orElse(null);
+        List<CommentDto> commentDtos = commentService.comments(id);
 
         model.addAttribute("article", article);
+        model.addAttribute("commentDtos", commentDtos);
 
         return "articles/show";
     }

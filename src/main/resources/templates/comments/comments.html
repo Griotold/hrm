@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="comments">
+    <div id="comments-list" th:each="comment : ${commentDtos}">
+            <div class="card m-2" id="@{'comment-' + ${comment.id}}">
+                <div class="card-header" th:text="${comment.nickname}">
+
+                </div>
+                <div class="card-body" th:text="${comment.body}">
+
+                </div>
+            </div>
+    </div>
+</div>
