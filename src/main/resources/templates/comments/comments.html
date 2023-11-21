@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="comments">
+    <!-- 댓글 목록 -->
     <div id="comments-list" th:each="comment : ${commentDtos}">
             <div class="card m-2" id="@{'comment-' + ${comment.id}}">
                 <div class="card-header" th:text="${comment.nickname}">
@@ -11,4 +12,26 @@
                 </div>
             </div>
     </div>
+
+    <!-- 새 댓글 -->
+    <div class="card m-2" id="comments-new">
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">닉네임</label>
+                    <input type="text" class="form-control form-control-sm" id="new-comment-nickname">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">댓글 내용</label>
+                    <textarea type="text" class="form-control form-control-sm" rows="3" id="new-comment-body"></textarea>
+                </div>
+
+                <input type="hidden" th:field="${article.id}" id="new-comment-article-id"/>
+
+                <button type="button" class="btn btn-outline-primary btn-sm" id="comment-create-btn">댓글 작성</button>
+            </form>
+        </div>
+    </div>
 </div>
+
